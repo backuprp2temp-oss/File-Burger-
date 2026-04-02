@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ── Custom Theme ── */
+@theme {
+  --color-burger-50: #fff8f0;
+  --color-burger-100: #ffe8cc;
+  --color-burger-200: #ffd199;
+  --color-burger-300: #ffba66;
+  --color-burger-400: #ffa333;
+  --color-burger-500: #ff8c00;
+  --color-burger-600: #cc7000;
+  --color-burger-700: #995400;
+  --color-burger-800: #663800;
+  --color-burger-900: #331c00;
+
+  --color-surface: #0f0f14;
+  --color-surface-light: #1a1a24;
+  --color-surface-lighter: #25253a;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #8888aa;
+  --color-text-muted: #55556a;
+
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+
+  --font-family-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Base Styles ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 100, 0, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Glass Card ── */
+.glass-card {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 1rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--color-glass-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Glow Button ── */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-burger-500), var(--color-burger-600));
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-glow:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(255, 140, 0, 0.35);
+}
+
+.btn-glow:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-glow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.btn-glow:hover:not(:disabled)::after {
+  transform: translateX(100%);
+}
+
+/* ── Subtle Button ── */
+.btn-subtle {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-subtle:hover:not(:disabled) {
+  background: var(--color-glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-subtle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Pulse Dot ── */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.status-dot.connected {
+  background: var(--color-success);
+}
+
+.status-dot.connected::after {
+  background: var(--color-success);
+}
+
+.status-dot.disconnected {
+  background: var(--color-text-muted);
+}
+
+.status-dot.disconnected::after {
+  display: none;
+}
+
+/* ── Drop Zone ── */
+.drop-zone {
+  border: 2px dashed var(--color-glass-border);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: var(--color-burger-500);
+  background: rgba(255, 140, 0, 0.05);
+}
+
+.drop-zone.drag-over {
+  transform: scale(1.01);
+}
+
+/* ── Progress Bar ── */
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: var(--color-surface-lighter);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-burger-500), var(--color-burger-400));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── Fade in animation ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease forwards;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-lighter);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ── Input ── */
+.input-field {
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 1rem;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  letter-spacing: 0.15em;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  font-family: var(--font-family-sans);
+}
+
+.input-field:focus {
+  border-color: var(--color-burger-500);
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+}
